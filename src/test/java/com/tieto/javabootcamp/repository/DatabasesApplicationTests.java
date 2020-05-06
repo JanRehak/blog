@@ -23,21 +23,21 @@ public class DatabasesApplicationTests {
 	UserRepository repository;
 	User user;
 
-	@BeforeEach
-	public void init() {
-		user = new User("David", "", Set.of());
-		repository.deleteAll();
-	}
-
-	@Test
-	@DisplayName("Saved user can be find.")
-	public void findSavedUserByName() {
-
-		user = repository.save(user);
-
-		assertThat(repository.findByName(user.getName())).hasValue(user);
-
-	}
+//	@BeforeEach
+//	public void init() {
+//		user = new User("David", "", Set.of());
+//		repository.deleteAll();
+//	}
+//
+//	@Test
+//	@DisplayName("Saved user can be find.")
+//	public void findSavedUserByName() {
+//
+//		user = repository.save(user);
+//
+//		assertThat(repository.findByName(user.getName())).hasValue(user);
+//
+//	}
 
 
 }
