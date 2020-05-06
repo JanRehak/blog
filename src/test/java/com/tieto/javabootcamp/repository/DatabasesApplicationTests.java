@@ -19,9 +19,9 @@ import java.util.Set;
 @SpringBootTest(classes = DatabaseApplication.class)
 public class DatabasesApplicationTests {
 
-	@Autowired 
-	UserRepository repository;
-	User user;
+//	@Autowired
+//	UserRepository repository;
+//	User user;
 
 //	@BeforeEach
 //	public void init() {
