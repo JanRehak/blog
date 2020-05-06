@@ -21,9 +21,5 @@ public class HtmlController {
     public String articles() {
         return "articles.html";
     }
-    
-    @GetMapping("/atack")
-    public String atack() {
-        return "atack.html";
-    }
+
 }

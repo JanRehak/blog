@@ -1,4 +1,4 @@
-package com.tieto.javabootcamp.model.user;
+package com.tieto.javabootcamp.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

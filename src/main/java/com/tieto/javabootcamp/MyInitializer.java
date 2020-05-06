@@ -6,8 +6,8 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.tieto.javabootcamp.model.user.Role;
-import com.tieto.javabootcamp.model.user.User;
+import com.tieto.javabootcamp.model.Role;
+import com.tieto.javabootcamp.model.User;
 import com.tieto.javabootcamp.repository.RoleRepository;
 import com.tieto.javabootcamp.service.UserService;
 
@@ -20,7 +20,7 @@ public class MyInitializer implements InitializingBean  {
 	@Autowired RoleRepository roleRepository;
 
 	@Override
-	public void afterPropertiesSet() throws Exception {
+	public void afterPropertiesSet() {
 		
 		Role userRole = new Role();
 		userRole.setName("USER");
@@ -28,7 +28,12 @@ public class MyInitializer implements InitializingBean  {
 		Role adminRole = new Role();
 		adminRole.setName("ADMIN");
 		roleRepository.save(adminRole);
-		
+
+
+		if (!userService.verifyUser("administrator")) {
+			userService.createUser(new User("administrator", "admin", roleRepository.findByName("ADMIN")));
+		}
+
 		userService.createUser(new User("Anicka", "anicka", roleRepository.findAll()));
 		userService.createUser(new User("Standa", "standa", roleRepository.findByName("USER")));
 

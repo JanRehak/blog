@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tieto.javabootcamp.model.user.Role;
+import com.tieto.javabootcamp.model.Role;
 import com.tieto.javabootcamp.repository.RoleRepository;
 
 @RestController

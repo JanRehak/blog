@@ -1,9 +1,8 @@
-package com.tieto.javabootcamp.model.user;
+package com.tieto.javabootcamp.model;
 
 import java.util.Set;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,7 +11,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
@@ -78,4 +76,7 @@ public class User {
 		this.roles = roles;
 	}
 
+    public void setName(String name) {
+        this.name = name;
+    }
 }

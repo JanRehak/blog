@@ -3,12 +3,14 @@ package com.tieto.javabootcamp.service.impl;
 import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import com.tieto.javabootcamp.exception.BadRequestException;
 import com.tieto.javabootcamp.exception.NotFoundException;
-import com.tieto.javabootcamp.model.text.Article;
+import com.tieto.javabootcamp.model.Article;
 import com.tieto.javabootcamp.repository.ArticleRepository;
 import com.tieto.javabootcamp.repository.UserRepository;
 import com.tieto.javabootcamp.service.ArticleService;
@@ -22,10 +24,7 @@ public class ArticleServiceImpl implements ArticleService {
 	private UserRepository userRepository;
 	
 	@Override
-	public Article saveAritcle(Article article, User user) {
-		if (article.getId() == null) {
-			article.setCreatedAt(LocalDateTime.now());
-		}
+	public Article saveArticle(Article article, User user) {
 		if (user == null) {
 			throw new BadRequestException("No author specified");
 		}
@@ -39,6 +38,11 @@ public class ArticleServiceImpl implements ArticleService {
 	@Override
 	public Iterable<Article> listArticles() {
 		return articleRepository.findAll();
+	}
+
+	@Override
+	public Page<Article> listPageable(Pageable pageable) {
+		return articleRepository.findAll(pageable);
 	}
 
 }

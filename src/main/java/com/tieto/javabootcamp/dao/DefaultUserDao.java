@@ -1,7 +1,7 @@
 package com.tieto.javabootcamp.dao;
 
 import com.tieto.javabootcamp.exception.DatabaseException;
-import com.tieto.javabootcamp.model.user.User;
+import com.tieto.javabootcamp.model.User;
 import com.tieto.javabootcamp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -38,6 +38,11 @@ public class DefaultUserDao implements UserDao {
     @Override
     public User getUser(String name) throws DatabaseException {
         return userRepository.findByName(name).orElseThrow(DatabaseException::new);
+    }
+
+    @Override
+    public User getUserById(Long id) throws DatabaseException {
+        return userRepository.findById(id).orElseThrow(DatabaseException::new);
     }
 
     @Override

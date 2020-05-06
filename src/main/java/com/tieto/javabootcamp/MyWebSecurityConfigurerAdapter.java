@@ -18,7 +18,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tieto.javabootcamp.model.user.Role;
+import com.tieto.javabootcamp.model.Role;
 import com.tieto.javabootcamp.repository.UserRepository;
 
 @Configuration
@@ -45,16 +45,14 @@ public class MyWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter
 			@Override
 			@Transactional(readOnly = true)
 			public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-				com.tieto.javabootcamp.model.user.User user = userRepository.findByName(username)
+				com.tieto.javabootcamp.model.User user = userRepository.findByName(username)
 						.orElseThrow(() -> new UsernameNotFoundException(username));
 				
 				return User.builder()
 						.username(user.getName())
 						.password(user.getPassword())
 						.authorities(
-								//                           r -> r.getName()   roleName -> new SimpleGrantedAuthority(roleName)
 								user.getRoles().stream().map(Role::getName).map(roleName -> new SimpleGrantedAuthority("ROLE_" + roleName)).collect(Collectors.toSet())
-								//        { name: "USER" } -> "USER"         -> new SimpleGrantedAuthority("ROLE_USER")
 						)
 						.build();
 			}

@@ -4,7 +4,7 @@ import java.util.Set;
 
 import org.springframework.data.repository.CrudRepository;
 
-import com.tieto.javabootcamp.model.user.Role;
+import com.tieto.javabootcamp.model.Role;
 
 public interface RoleRepository extends CrudRepository<Role, Long> {
 	

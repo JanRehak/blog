@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     loadUsers();
     loadRoles();
-    // nebo document.forms.mainForm
     document.getElementsByName('mainForm')[0].addEventListener('submit', event => {
     	event.preventDefault();
     	storeUser(
@@ -11,10 +10,22 @@ document.addEventListener("DOMContentLoaded", () => {
 		);
     	return false;
     });
-
-//    document.getElementById('submit-the-form').addEventListener('click', () => {
-//    	storeUser(document.mainForm.firstname.value, document.mainForm.lastname.value);
-//    });
+    document.getElementsByName('mainForm2')[0].addEventListener('submit', event => {
+        event.preventDefault();
+        removeUser(
+                document.mainForm2.id.value
+        );
+        return false;
+    });
+    document.getElementsByName('mainForm3')[0].addEventListener('submit', event => {
+        event.preventDefault();
+        editUser(
+                document.mainForm3.id.value,
+                document.mainForm3.name.value,
+                document.mainForm3.password.value
+        );
+        return false;
+    });
 });
 
 const storeUser = (username, password, roleIds) => {
@@ -22,13 +33,31 @@ const storeUser = (username, password, roleIds) => {
     req.addEventListener('load', loadUsers);
     req.open("POST", "./api/users");
     req.setRequestHeader('Content-Type', 'application/json');
-    req.setRequestHeader('X-CSRF', )
     const newUser = {
         name: username,
         password: password,
         roles: roleIds.map(roleId => ({ id: roleId }))
     };
     req.send(JSON.stringify(newUser));
+};
+
+const editUser = (id, username, password) => {
+    const req = new XMLHttpRequest();
+    req.addEventListener('put', editUser);
+    req.open("PUT", "./api/users/" + id);
+    req.setRequestHeader('Content-Type', 'application/json');
+    const updatedUser = {
+            name: username,
+            password: password
+        };
+    req.send(JSON.stringify(updatedUser));
+};
+
+const removeUser = (id) => {
+    const req = new XMLHttpRequest();
+    req.addEventListener('delete', removeUser);
+    req.open("DELETE", "./api/users/" + id);
+    req.send();
 };
 
 const loadRoles = () => {
