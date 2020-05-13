@@ -65,7 +65,7 @@ public class MyWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter
 			.anonymous()
 			.and().authorizeRequests()
 			.antMatchers(
-					"/users",
+
 					"/api/users**",
 					"/api/roles**",
 					"/*.css",
@@ -78,7 +78,7 @@ public class MyWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter
 //				.loginPage("login.html")
 			.and().logout()
 				.logoutUrl("/logout")
-				.logoutSuccessUrl("/users")
+				.logoutSuccessUrl("/")
 			//.and().httpBasic()
 			.and().cors()
 			.and().csrf().disable();

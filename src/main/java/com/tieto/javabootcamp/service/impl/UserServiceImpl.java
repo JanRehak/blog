@@ -1,5 +1,6 @@
 package com.tieto.javabootcamp.service.impl;
 
+import com.tieto.javabootcamp.MyWebSecurityConfigurerAdapter;
 import com.tieto.javabootcamp.dao.UserDao;
 import com.tieto.javabootcamp.exception.DatabaseException;
 import com.tieto.javabootcamp.exception.NotFoundException;
@@ -27,6 +28,8 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private MyWebSecurityConfigurerAdapter myWebSecurityConfigurerAdapter;
 
     @Override
     public User createUser(User user) {
@@ -64,12 +67,16 @@ public class UserServiceImpl implements UserService {
         return isRemoved;
     }
 
+
+
+
     @Override
     public void removeUser(Long id) {
         if (userRepository.findById(id).isPresent()) {
             userRepository.deleteById(id);
+
         } else {
-            throw new NotFoundException("User with supplied id does not exist");
+            throw new NotFoundException("User with supplied id does not exist. Also, you can only remove users as ADMIN");
         }
     }
 

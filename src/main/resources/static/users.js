@@ -83,18 +83,23 @@ const loadUsers = () => {
         const tableBody = document.getElementById('user-table');
         tableBody.innerHTML = '';
         const users = JSON.parse(req.responseText);
-        users.forEach(user => createRow(tableBody, user.id, user.name));
+        users.forEach(user => createRow(tableBody, user.id, user.name, user.roles));
     });
     req.open("GET", "./api/users");
     req.send();
 };
 
-const createRow = (tableBody, id, name) => {
+const createRow = (tableBody, id, name, roles) => {
     const idCell = document.createElement('td');
     idCell.innerText = id;
     const nameCell = document.createElement('td');
     nameCell.innerText = name;
+    const rolesCell = document.createElement('td');
+    roles.forEach(role => { par = document.createElement('p');
+    par.innerText = role.name;
+    rolesCell.append(par);
+    })
     const userRow = document.createElement('tr');
-    userRow.append(idCell, nameCell);
+    userRow.append(idCell, nameCell, rolesCell);
     tableBody.append(userRow);
 };

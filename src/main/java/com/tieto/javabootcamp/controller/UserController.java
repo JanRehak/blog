@@ -3,6 +3,8 @@ package com.tieto.javabootcamp.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import com.tieto.javabootcamp.model.User;
@@ -39,7 +41,8 @@ public class UserController {
 	public User createUser(@RequestBody User user) {
 		return userService.createUser(user);
 	}
-	
+
+	@Secured("ROLE_ADMIN")
 	@DeleteMapping("/{userId}")
 	public void deleteUser(@PathVariable Long userId) {
 		userService.removeUser(userId);
@@ -49,6 +52,14 @@ public class UserController {
 	public User updateUser(@PathVariable Long userId, @RequestBody User user) {
 		return userService.updateUser(userId, user);
 	}
+
+	@GetMapping(value = "/loggedUser")
+	public User getLoggedUser(@AuthenticationPrincipal org.springframework.security.core.userdetails.User loggedUser) {
+		return userService.getUser(loggedUser.getUsername());
+	}
+
+
+
 
 
 }

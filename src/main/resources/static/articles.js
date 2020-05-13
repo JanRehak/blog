@@ -5,6 +5,21 @@ document.addEventListener("DOMContentLoaded", () => {
     	storeArticle(document.mainForm.content.value);
     	return false;
     });
+    document.getElementsByName('mainForm2')[0].addEventListener('submit', event => {
+        event.preventDefault();
+        removeArticle(
+                document.mainForm2.id.value
+        );
+        return false;
+    });
+    document.getElementsByName('mainForm3')[0].addEventListener('submit', event => {
+        event.preventDefault();
+        editArticle(
+                document.mainForm3.id.value,
+                document.mainForm3.content.value,
+        );
+        return false;
+    });
 });
 
 const storeArticle = (_content) => {
@@ -32,23 +47,35 @@ const loadArticles = () => {
 
 const createRow = (tableBody, article) => {
     const nameCell = document.createElement('td');
-    const nameParagraph = document.createElement('p');
-    nameParagraph.innerText = article.author.name;
+    nameCell.innerText = article.author.name;
+    const idCell = document.createElement('td');
+    idCell.innerText = `id:${article.id}`;
     const contentCell = document.createElement('td');
     const contentParagraph = document.createElement('p');
     contentParagraph.innerText = article.content;
     const commentsTable = document.createElement('table');
-//    article.comments.forEach(comment => {
-//    	const commentRow = document.createElement('tr');
-//    	const commentAuthorCell = document.createElement('td');
-//    	commentAuthorCell.innerText = comment.author.name;
-//    	const commentContentCell = document.createElement('td');
-//    	commentContentCell.innerText = comment.content;
-//    	commentRow.append(commentAuthorCell, commentContentCell);
-//    	commentsTable.append(commentRow);
-//    })
     contentCell.append(contentParagraph, commentsTable);
     const articleRow = document.createElement('tr');
-    articleRow.append(nameCell, contentCell);
+    articleRow.append(nameCell, contentCell, idCell);
     tableBody.append(articleRow);
+};
+
+const removeArticle = (id) => {
+    console.log(id);
+    const req = new XMLHttpRequest();
+    req.addEventListener('delete', removeArticle);
+    req.open("DELETE", "./api/articles/" + id);
+    req.send();
+};
+
+const editArticle = (id, content) => {
+    const req = new XMLHttpRequest();
+    req.addEventListener('put', editArticle);
+    req.open("PUT", "./api/articles/" + id);
+    req.setRequestHeader('Content-Type', 'application/json');
+    const updatedArticle = {
+            content: content,
+
+        };
+    req.send(JSON.stringify(updatedArticle));
 };

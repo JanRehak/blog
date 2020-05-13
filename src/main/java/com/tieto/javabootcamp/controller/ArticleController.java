@@ -6,11 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.tieto.javabootcamp.model.Article;
 import com.tieto.javabootcamp.service.ArticleService;
@@ -26,10 +22,21 @@ public class ArticleController {
 		return articleService.listArticles();
 	}
 	
-	@Secured("ROLE_ADMIN")
+	@Secured({"ROLE_ADMIN", "ROLE_USER"})
 	@PostMapping public Article post(@RequestBody Article article, @AuthenticationPrincipal User user) {
 		return articleService.saveArticle(article, user);
 	}
+
+	@Secured({"ROLE_ADMIN", "ROLE_USER"})
+	@DeleteMapping("/{articleId}") public void deleteArticle(@PathVariable("articleId") Long id, @AuthenticationPrincipal User user) {
+		articleService.deleteArticle(id, user);
+	}
+
+	@PutMapping("/{articleId}")
+	public Article updateArticle(@PathVariable("articleId") Long id, @RequestBody Article article, @AuthenticationPrincipal User user) {
+		return articleService.updateArticle(id, article, user);
+	}
+
 
 	@GetMapping("/pageable")
 	public Page<Article> getPageArticles(Pageable pageable){
