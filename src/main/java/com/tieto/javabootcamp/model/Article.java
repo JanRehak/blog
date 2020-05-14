@@ -19,10 +19,10 @@ public class Article {
     @JoinColumn(name = "author")
     private User author;
 
-    @Column(name="modified_time")
+    @Column(name= "modified_time")
     private LocalDateTime modifiedDateTime;
 
-    @Column(name="deleted_time")
+    @Column(name= "deleted_time")
     private LocalDateTime deletedDateTime;
 
 

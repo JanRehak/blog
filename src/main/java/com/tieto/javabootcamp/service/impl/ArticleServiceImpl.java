@@ -51,8 +51,8 @@ public class ArticleServiceImpl implements ArticleService {
 	// TODO - dodelat check jestli je existujici autor
 	@Override
 	public void deleteArticle(Long id, User user) {
-		//TODO chybi metoda na
-		System.out.println("Dostal jsem se zde");
+		//TODO chybi metoda na granted autority
+//		System.out.println("Dostal jsem se zde");
 		if (user.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
 			articleRepository.deleteById(id);
 		} else if (articleRepository.findById(id).get().getAuthor().getName().equals(user.getUsername())){
