@@ -17,8 +17,8 @@ public class ArticleController {
 
 	@Autowired
 	ArticleService articleService;
-	
-	@GetMapping public Iterable<Article> get() { 
+
+	@GetMapping public Iterable<Article> get() {
 		return articleService.listArticles();
 	}
 	
@@ -36,7 +36,6 @@ public class ArticleController {
 	public Article updateArticle(@PathVariable("articleId") Long id, @RequestBody Article article, @AuthenticationPrincipal User user) {
 		return articleService.updateArticle(id, article, user);
 	}
-
 
 	@GetMapping("/pageable")
 	public Page<Article> getPageArticles(Pageable pageable){

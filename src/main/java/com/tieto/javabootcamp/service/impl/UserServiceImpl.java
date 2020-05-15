@@ -5,6 +5,7 @@ import com.tieto.javabootcamp.dao.UserDao;
 import com.tieto.javabootcamp.exception.DatabaseException;
 import com.tieto.javabootcamp.exception.NotFoundException;
 import com.tieto.javabootcamp.model.User;
+import com.tieto.javabootcamp.repository.RoleRepository;
 import com.tieto.javabootcamp.repository.UserRepository;
 
 import com.tieto.javabootcamp.service.UserService;
@@ -25,6 +26,8 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
 
     @Autowired
+    private RoleRepository roleRepository;
+    @Autowired
     private UserRepository userRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -34,8 +37,19 @@ public class UserServiceImpl implements UserService {
     @Override
     public User createUser(User user) {
         try {
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
-            return userDao.saveUser(user);
+            // pokud user neexistuje, vytvorime si ho a pak ulozime
+            if (userRepository.findByName(user.getName()).isEmpty()) {
+                user.setPassword(passwordEncoder.encode(user.getPassword()));
+                if (user.getRoles().isEmpty()) {
+                    user.setRoles(roleRepository.findByName("USER"));
+                }
+                return userDao.saveUser(user);
+            }
+            //user existuje - vracime null
+            else return null;
+
+
+
         } catch (DatabaseException e) {
             log.error(e.getMessage());
             e.printStackTrace();
@@ -86,11 +100,18 @@ public class UserServiceImpl implements UserService {
         if (!user.getName().isEmpty()) {
             userToUpdate.setName(user.getName());
         }
-        if (!user.getPassword().isEmpty()) {
-            userToUpdate.setPassword(user.getPassword());
+
+        if (userRepository.findByName(userToUpdate.getName()).isEmpty()) {
+            if (!user.getPassword().isEmpty()) {
+                userToUpdate.setPassword(user.getPassword());
+            }
+            if (!user.getPassword().isEmpty()) {
+                userToUpdate.setPassword(user.getPassword());
+            }
+            return userRepository.save(userToUpdate);
         }
 //        userToUpdate.setRoles(user.getRoles());
-        return userRepository.save(userToUpdate);
+        return null;
     }
 
     @Override

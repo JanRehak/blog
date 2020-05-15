@@ -19,10 +19,24 @@ public class Article {
     @JoinColumn(name = "author")
     private User author;
 
-    @Column(name= "modified_time")
+    public LocalDateTime getModifiedDateTime() {
+        return modifiedDateTime;
+    }
+
+    public void setModifiedDateTime(LocalDateTime modifiedDateTime) {
+        this.modifiedDateTime = modifiedDateTime;
+    }
+
+    public LocalDateTime getDeletedDateTime() {
+        return deletedDateTime;
+    }
+
+    public void setDeletedDateTime(LocalDateTime deletedDateTime) {
+        this.deletedDateTime = deletedDateTime;
+    }
+
     private LocalDateTime modifiedDateTime;
 
-    @Column(name= "deleted_time")
     private LocalDateTime deletedDateTime;
 
 

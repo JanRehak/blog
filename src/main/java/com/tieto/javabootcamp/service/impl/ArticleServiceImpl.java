@@ -16,6 +16,8 @@ import com.tieto.javabootcamp.repository.ArticleRepository;
 import com.tieto.javabootcamp.repository.UserRepository;
 import com.tieto.javabootcamp.service.ArticleService;
 
+import static com.tieto.javabootcamp.config.ArticleSpecification.*;
+
 @Service
 public class ArticleServiceImpl implements ArticleService {
 
@@ -33,17 +35,19 @@ public class ArticleServiceImpl implements ArticleService {
 			userRepository.findByName(user.getUsername())
 				.orElseThrow(() -> new NotFoundException("Author with supplied id not found"))
 		);
+		article.setModifiedDateTime(LocalDateTime.now());
+		article.setDeletedDateTime(LocalDateTime.of(9999, 12, 31, 0, 0, 0));
 		return articleRepository.save(article);
 	}
 
 	@Override
 	public Iterable<Article> listArticles() {
-		return articleRepository.findAll();
+		return articleRepository.findAll(isNotDeleted());
 	}
 
 	@Override
 	public Page<Article> listPageable(Pageable pageable) {
-		return articleRepository.findAll(pageable);
+		return articleRepository.findAll(isNotDeleted(), pageable);
 	}
 
 
@@ -53,20 +57,27 @@ public class ArticleServiceImpl implements ArticleService {
 	public void deleteArticle(Long id, User user) {
 		//TODO chybi metoda na granted autority
 //		System.out.println("Dostal jsem se zde");
+		Article articleToDelete = articleRepository.findById(id).get();
+
 		if (user.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
-			articleRepository.deleteById(id);
+			articleToDelete.setDeletedDateTime(LocalDateTime.now());
+			updateArticle(id, articleToDelete, user);
 		} else if (articleRepository.findById(id).get().getAuthor().getName().equals(user.getUsername())){
-			articleRepository.deleteById(id);
+			articleToDelete.setDeletedDateTime(LocalDateTime.now());
+			updateArticle(id, articleToDelete, user);
 		}
 	}
 
 	@Override
 	public Article updateArticle(Long id, Article article, User user) {
 		Article articleToUpdate = articleRepository.findById(id).orElseThrow(() -> new NotFoundException("Not found"));
+
 		if (user.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
 			articleToUpdate.setContent(article.getContent());
+			articleToUpdate.setModifiedDateTime(LocalDateTime.now());
 		} else if (articleToUpdate.getAuthor().getName().equals(user.getUsername())) {
 			articleToUpdate.setContent(article.getContent());
+			articleToUpdate.setModifiedDateTime(LocalDateTime.now());
 		}
 		return articleRepository.save(articleToUpdate);
 	}

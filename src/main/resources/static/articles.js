@@ -48,6 +48,8 @@ const loadArticles = () => {
 const createRow = (tableBody, article) => {
     const nameCell = document.createElement('td');
     nameCell.innerText = article.author.name;
+    const timeCell = document.createElement('td');
+    timeCell.innerText = article.modifiedDateTime;
     const idCell = document.createElement('td');
     idCell.innerText = `id:${article.id}`;
     const contentCell = document.createElement('td');
@@ -56,7 +58,7 @@ const createRow = (tableBody, article) => {
     const commentsTable = document.createElement('table');
     contentCell.append(contentParagraph, commentsTable);
     const articleRow = document.createElement('tr');
-    articleRow.append(nameCell, contentCell, idCell);
+    articleRow.append(nameCell,  contentCell, timeCell, idCell);
     tableBody.append(articleRow);
 };
 
@@ -75,7 +77,8 @@ const editArticle = (id, content) => {
     req.setRequestHeader('Content-Type', 'application/json');
     const updatedArticle = {
             content: content,
-
         };
     req.send(JSON.stringify(updatedArticle));
 };
+
+

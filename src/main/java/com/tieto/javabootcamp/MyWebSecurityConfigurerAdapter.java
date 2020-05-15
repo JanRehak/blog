@@ -26,19 +26,9 @@ import com.tieto.javabootcamp.repository.UserRepository;
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class MyWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
 
-//	@Autowired
-//	PasswordEncoder passwordEncoder;
 	@Autowired
 	UserRepository userRepository;
-	
-//	@Override
-//	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//		auth.inMemoryAuthentication()
-//			.withUser("user").password(passwordEncoder.encode("password")).roles("USER")
-//			.and()
-//			.withUser("admin").password(passwordEncoder.encode("admin")).roles("USER", "ADMIN");
-//	}
-	
+
 	@Bean
 	public UserDetailsService userDetailsService() {
 		return new UserDetailsService() {
