@@ -36,6 +36,8 @@ public class MyInitializer implements InitializingBean  {
 
 		userService.createUser(new User("Anicka", "anicka", roleRepository.findAll()));
 		userService.createUser(new User("Standa", "standa", roleRepository.findByName("USER")));
+		userService.createUser(new User("Guest", "guest", roleRepository.findByName("USER")));
+
 
 		// fetch all users
 		log.info("Users found with getAllUsers():");
