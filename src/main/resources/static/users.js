@@ -33,6 +33,7 @@ const storeUser = (username, password, roleIds) => {
     req.addEventListener('load', loadUsers);
     req.open("POST", "./api/users");
     req.setRequestHeader('Content-Type', 'application/json');
+    //    token not working
 //    req.setRequestHeader('X-CSRF-TOKEN', 'token');
     const newUser = {
         name: username,

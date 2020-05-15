@@ -58,6 +58,14 @@ public class UserController {
 		return userService.getUser(loggedUser.getUsername());
 	}
 
+	//TODO muzu zavolat generateAdmin, napr. kdyz smazu admina
+//	@PostMapping()
+//	public User generateAdmin() {
+//		return null;
+//	}
+
+
+
 
 
 

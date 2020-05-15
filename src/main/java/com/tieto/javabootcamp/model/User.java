@@ -36,7 +36,7 @@ public class User {
     )
     private Set<Role> roles;
 
-    protected User() {
+    public User() {
     }
 
     public User(String name, String password, Set<Role> roles) {

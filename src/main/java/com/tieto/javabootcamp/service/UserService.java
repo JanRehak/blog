@@ -24,4 +24,6 @@ public interface UserService {
 
     boolean verifyUser(String name);
 
+    User generateAdmin();
+
 }

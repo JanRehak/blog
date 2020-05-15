@@ -7,6 +7,19 @@
 <!--	<meta name="_csrf_header" content="${_csrf.headerName}"/>-->
 </head>
 <body>
+
+<h3>Menu</h3>
+<nav>
+	<ul>
+		<li><a href="./">Homepage</a></li>
+		<li><a href="./articles">Articles</a></li>
+		<li><a href="./api/users/loggedUser">Logged User</a></li>
+		<li><a href="./logout">Logout</a></li>
+		<li><a href="mailto:jan.rehak@tieto.com">Contact Us</a></li>
+	</ul>
+</nav>
+<hr>
+
 	<h1>Users</h1>
 	<table class="user-list">
 		<thead>
@@ -18,9 +31,9 @@
 		</thead>
 		<tbody id="user-table"></tbody>
 	</table>
+<hr>
 
-
-	<h2>MainForm to add user</h2>
+	<h2>Add User</h2>
 	<form name="mainForm">
 		<table>
 			<tr>
@@ -45,8 +58,9 @@
 
 		</table>
 	</form>
+<hr>
 
-	<h2>MainForm to delete user</h2>
+	<h2>Delete user</h2>
 	<form name="mainForm2">
 		<table>
 			<tr>
@@ -59,8 +73,9 @@
 			</tr>
 		</table>
 	</form>
+<hr>
 
-	<h2>MainForm to edit user</h2>
+	<h2>Edit user</h2>
 	<form name="mainForm3">
 		<table>
 			<tr>
@@ -82,7 +97,7 @@
 		</table>
 	</form>
 
-	<a href="./">HOME</a>
-	<a href="./articles">Articles</a>
+<hr>
+
 </body>
 </html>

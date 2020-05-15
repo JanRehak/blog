@@ -4,6 +4,7 @@ import com.tieto.javabootcamp.MyWebSecurityConfigurerAdapter;
 import com.tieto.javabootcamp.dao.UserDao;
 import com.tieto.javabootcamp.exception.DatabaseException;
 import com.tieto.javabootcamp.exception.NotFoundException;
+import com.tieto.javabootcamp.model.Role;
 import com.tieto.javabootcamp.model.User;
 import com.tieto.javabootcamp.repository.RoleRepository;
 import com.tieto.javabootcamp.repository.UserRepository;
@@ -16,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -57,6 +59,23 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    public User generateAdmin() {
+        User admin = new User();
+        try {
+            if (userRepository.findByName("administrator").isEmpty()) {
+                admin.setRoles(roleRepository.findByName("USER"));
+                admin.setName("administrator");
+                admin.setPassword("admin");
+            }
+
+            return userDao.saveUser(admin);
+        } catch (DatabaseException e) {
+            log.error(e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     @Override
     public User getUser(String name) {
         User user = null;
@@ -89,10 +108,13 @@ public class UserServiceImpl implements UserService {
         if (userRepository.findById(id).isPresent()) {
             userRepository.deleteById(id);
 
+
         } else {
             throw new NotFoundException("User with supplied id does not exist. Also, you can only remove users as ADMIN");
         }
     }
+
+
 
     public User updateUser(Long id, User user) {
         User userToUpdate = userRepository.findById(id).orElseThrow(() -> new NotFoundException("User not found"));
@@ -129,7 +151,7 @@ public class UserServiceImpl implements UserService {
         // Not implemented yet
     }
 
-
+//TODO rename into isUserPresent()
     public boolean verifyUser(String name) {
         if (userRepository.findByName(name).isPresent()) {
             return true;

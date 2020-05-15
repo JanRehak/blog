@@ -21,11 +21,13 @@ const createRow = (tableBody, article) => {
     nameCell.innerText = article.author.name;
     const contentCell = document.createElement('td');
     const contentParagraph = document.createElement('p');
+    const idCell = document.createElement('td');
+    idCell.innerText = `id:${article.id}`;
     contentParagraph.innerText = article.content;
     const commentsTable = document.createElement('table');
     contentCell.append(contentParagraph, commentsTable);
     const articleRow = document.createElement('tr');
-    articleRow.append(nameCell, contentCell);
+    articleRow.append(nameCell, contentCell, idCell);
     tableBody.append(articleRow);
 };
 

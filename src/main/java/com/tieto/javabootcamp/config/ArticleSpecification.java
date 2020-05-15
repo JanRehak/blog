@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 
 public class ArticleSpecification {
 
+
     public static Specification<Article> isNotDeleted() {
         return new Specification<Article>() {
             @Override

@@ -5,14 +5,27 @@
 	<script type="text/javascript" src="./articles.js"></script>
 </head>
 <body>
+
+<h3>Menu</h3>
+<nav>
+	<ul>
+		<li><a href="./">Homepage</a></li>
+		<li><a href="./users">Users</a></li>
+		<li><a href="./api/users/loggedUser">Logged User</a></li>
+		<li><a href="./logout">Logout</a></li>
+		<li><a href="mailto:jan.rehak@tieto.com">Contact Us</a></li>
+	</ul>
+</nav>
+
 	<h1>Articles</h1>
-	<p>
-		<a href="./logout">Logout</a>
-	</p>
+	<hr>
+
 	<table class="article-table">
 		<tbody id="article-list"></tbody>
 	</table>
-	
+	<hr>
+
+	<h2>POST Article</h2>
 	<form name="mainForm">
 		<table>
 			<tr>
@@ -27,8 +40,9 @@
 			</tr>
 		</table>
 	</form>
+	<hr>
 
-	<h2>MainForm to delete article</h2>
+	<h2>DELETE Article</h2>
 	<form name="mainForm2">
 		<table>
 			<tr>
@@ -41,8 +55,9 @@
 			</tr>
 		</table>
 	</form>
+	<hr>
 
-	<h2>MainForm to edit article</h2>
+	<h2>EDIT Article</h2>
 	<form name="mainForm3">
 		<table>
 			<tr>
@@ -61,11 +76,13 @@
 			</tr>
 		</table>
 	</form>
+	<hr>
 
 
 
-	<a href="./users">Users</a>
-	<a href="./">HOME</a>
+
+
+
 	
 </body>
 </html>
